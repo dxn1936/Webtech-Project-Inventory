@@ -1,8 +1,7 @@
 {% load static %}
+{% include 'navbar.html' %}
 {% load crispy_forms_tags %}
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -17,9 +16,9 @@
     
 
     <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
+<link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -53,24 +52,56 @@
   </head>
   <body>
     
-{% include 'navbar.html'%}
+
 
 <main class="container">
-
+  {% if messages %}
+        <ul class="messages">
+               {% for message in messages %}
+                     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+               {% endfor %}
+       </ul>
+  {% endif %}
   <div class="bg-light p-5 rounded">
     <h1 class="header">{{title}}</h1>
-    <form method="POST" action="">{% csrf_token %}
-    {{form|crispy}}
-    <br>
-    <input type="submit" value="Save" />
+     <form method='GET' action=''>{% csrf_token %}
+      {{filter.form|crispy}}
+      <br>
+      <input type="submit" value='Search'/>
   </form>
+  <div class="display_table">
+    <table class="table">
+    <thead>
+      <th class="table_head">Sr.N.</th>
+      <th class="table_head">PRODUCT NAME</th>
+      <th class="table_head">PURCHASED FROM</th>
+      <th class="table_head">PURCHASED PRICE</th>
+      <th class="table_head">WAREHOUSE</th>
+      <th class="table_head">SOLD</th>
+      <th class="table_head">SOLD TO</th>
+    </thead>
+    {% for i in filter.qs %}
+    <tr>
+      <td class="fs-6">{{forloop.counter}}</td>
+      <td class="fs-6">{{i.product_item_name}}</td>
+      <td class="fs-6">{{i.purchased_from}}</td>
+      <td class="fs-6">{{i.purchased_price}}</td>
+      <td class="fs-6">{{i.product_in}}</td>
+      <td class="fs-6">{{i.product_sold}}</td>
+      <td class="fs-6">{{i.sold_to}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+    
+  </div>
+
   </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script></body>
+
 
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
+    <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
       
   </body>
 </html>

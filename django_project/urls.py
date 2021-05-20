@@ -21,6 +21,7 @@ from django.urls import include
 urlpatterns = [
     path('', views.home, name='home'),
     path('receive_products/', views.receive_products, name='receive_products'),
+    path('list_products/', views.list_products, name='list_products'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls'))    #django authorization
 ]

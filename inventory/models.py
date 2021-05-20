@@ -23,7 +23,7 @@ class Products(models.Model):
 	product_category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
 
 	def __str__(self):
-		return self.product_name+"     "+self.product_brand+"     "+str(self.product_category)
+		return self.product_name
 
 
 
@@ -33,8 +33,8 @@ class Product_items_details(models.Model):
 	purchased_price = models.IntegerField(default='0', blank=True, null=True)
 	selling_price = models.IntegerField(default='0', blank=True, null=True)
 	product_in = models.ForeignKey(Warehouse, on_delete=models.CASCADE, blank=True)
-	product_sold = models.BooleanField(default=False)
-	sold_to = models.CharField(max_length=50, blank=True, null=True)
+	product_sold = models.BooleanField(default=0)
+	sold_to = models.CharField(max_length=50, blank=True, null=True, default=None)
 	last_updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 

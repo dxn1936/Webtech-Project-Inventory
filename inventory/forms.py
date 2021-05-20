@@ -13,3 +13,7 @@ class ReceiveProductForm(forms.ModelForm):
 		model = Product_items_details
 		fields = ['product_item_name', 'purchased_from', 'purchased_price', 'selling_price', 'product_in']
 
+class ProductSearchForm(forms.ModelForm):
+	class Meta:
+		model = Product_items_details
+		fields = ['purchased_from']
