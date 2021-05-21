@@ -22,6 +22,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('receive_products/', views.receive_products, name='receive_products'),
     path('list_products/', views.list_products, name='list_products'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('sell_products/', views.sell_products, name='sell_products'),
+    path('sell_qty/<str:pk>/', views.sell_qty, name='sell_qty'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls'))    #django authorization
 ]

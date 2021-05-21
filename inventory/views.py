@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Product_items_details
-from .forms import ReceiveProductForm, ProductSearchForm
+from .models import Product_items_details, Products
+from .forms import ReceiveProductForm, ProductSearchForm, SearchProductsForm
 from django.contrib import messages
-from .filters import SearchFilter
+from .filters import SearchFilter, SearchProduct
 
 
 # Create your views here.
@@ -18,6 +18,7 @@ def home(request):
 	}
 	return render(request, "home.html",context)
 
+@login_required
 def receive_products(request):
 	title = 'RECEIVE PRODUCTS'
 	form = ReceiveProductForm(request.POST or None)
@@ -31,6 +32,7 @@ def receive_products(request):
 	}
 	return render(request, "receive_products.html", context)
 
+@login_required
 def list_products(request):
 	qset = Product_items_details.objects.all()
 	title = 'TOTAL STOCK'
@@ -42,3 +44,35 @@ def list_products(request):
 		'form': form
 	}
 	return render(request, "list_products.html", context)
+
+
+def dashboard(request):
+	product_details = Product_items_details.objects.all()
+	total = 0
+	for i in product_details:
+		total += i.selling_price - i.purchased_price 
+	context = {
+		'field': total
+	}
+	return render(request, 'dashboard.html', context)
+
+
+def sell_products(request):
+	title = 'List Of Products'
+	products = Products.objects.all()
+	filt = SearchProduct(request.GET, queryset=products)
+	form = SearchProductsForm(request.GET or None)
+	context = {
+		'title': title,
+		'products': products,
+		'filter': filt,
+		'form': form
+	}
+	return render(request, 'sell_products.html', context)
+
+def sell_qty(request,pk):
+	all_items = Product_items_details.objects.get(id=int(pk)-1)
+	context = {
+		'items': all_items
+	}
+	return render(request, 'sell_qty.html', context)

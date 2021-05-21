@@ -1,6 +1,5 @@
 {% load static %}
 {% include 'navbar.html' %}
-{% load crispy_forms_tags %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -29,7 +28,6 @@
 <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#7952b3">
 
-<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 
     <style>
       .bd-placeholder-img {
@@ -56,47 +54,46 @@
 
 
 <main class="container">
-  {% if messages %}
-        <ul class="messages">
-               {% for message in messages %}
-                     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-               {% endfor %}
-       </ul>
-  {% endif %}
   <div class="bg-light p-5 rounded">
-    <h1 class="header">{{title}}</h1>
-     <form method='GET' action=''>{% csrf_token %}
-      {{filter.form|crispy}}
-      <br>
-      <input type="submit" value='Search' onclick="scroll()" />
-  </form>
-  <div class="display_table">
-    <table class="table">
-    <thead>
-      <th class="table_head">Sr.N.</th>
-      <th class="table_head">PRODUCT NAME</th>
-      <th class="table_head">PURCHASED FROM</th>
-      <th class="table_head">PURCHASED PRICE</th>
-      <th class="table_head">SELLING PRICE</th>
-      <th class="table_head">WAREHOUSE</th>
-      <th class="table_head">SOLD</th>
-      <th class="table_head">SOLD TO</th>
-    </thead>
-    {% for i in filter.qs %}
-    <tr>
-      <td class="fs-6">{{forloop.counter}}</td>
-      <td class="fs-6">{{i.product_item_name}}</td>
-      <td class="fs-6">{{i.purchased_from}}</td>
-      <td class="fs-6">{{i.purchased_price}}</td>
-      <td class="fs-6">{{i.selling_price}}</td>
-      <td class="fs-6">{{i.product_in}}</td>
-      <td class="fs-6">{{i.product_sold}}</td>
-      <td class="fs-6">{{i.sold_to}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-    
-  </div>
+    <h1>{{field}}</h1>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
 
   </div>
 </main>
@@ -104,7 +101,6 @@
 
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
-    <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
       
   </body>
 </html>

@@ -17,3 +17,8 @@ class ProductSearchForm(forms.ModelForm):
 	class Meta:
 		model = Product_items_details
 		fields = ['purchased_from']
+
+class SearchProductsForm(forms.ModelForm):
+	class Meta:
+		model = Products
+		fields = ['product_name']
