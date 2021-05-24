@@ -4,6 +4,8 @@ from .models import Product_items_details, Products
 from .forms import ReceiveProductForm, ProductSearchForm, SearchProductsForm, UpdateSoldForm
 from django.contrib import messages
 from .filters import SearchFilter, SearchProduct
+#import array as product_arr 
+#import array as product_counts
 
 
 # Create your views here.
@@ -25,7 +27,7 @@ def receive_products(request):
 	if form.is_valid():
 		form.save()
 		messages.success(request, 'Successfully saved')
-		return redirect('/list_products')
+		return redirect('/receive_products')
 	context = {
 		'title': title,
 		'form': form
@@ -58,15 +60,26 @@ def dashboard(request):
 
 
 def sell_products(request):
+	product_counts = []
 	title = 'List of Products'
 	products = Products.objects.all()
 	filt = SearchProduct(request.GET, queryset=products)
 	form = SearchProductsForm(request.GET or None)
+	
+	for i in range(len(products)):
+		product_counts.append((products[i].product_name,Product_items_details.objects.filter(product_item_name=products[i], product_sold=False).count()))
+	
+	for i in range(len(product_counts)):
+		product_details = Products.objects.get(product_name=product_counts[i][0])
+		product_details.product_quantity = product_counts[i][1]	
+		product_details.save()
+	
 	context = {
 		'title': title,
 		'products': products,
 		'filter': filt,
-		'form': form
+		'form': form,
+		'product_counts': product_counts,
 	}
 	return render(request, 'sell_products.html', context)
 

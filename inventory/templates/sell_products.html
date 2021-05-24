@@ -76,12 +76,22 @@
       <th class="table_head">Sr.N.</th>
       <th class="table_head">PRODUCT NAME</th>
       <th class="table_head">PRODUCT BRAND</th>
+      <th class="table_head">PRODUCT QUANTITY</th>
     </thead>
     {% for i in filter.qs %}
     <tr>
       <td class="fs-6">{{forloop.counter}}</td>
       <td class="fs-6"><a href="{% url 'sell_qty' i.id %}">{{i.product_name}}</a></td>
       <td class="fs-6">{{i.product_brand}}</td>
+      {% if i.product_quantity <= i.product_reorder %}
+        {% if i.product_quantity == 0 %}
+          <td class="fs-6"><div style="background-color: red">{{i.product_quantity}}</div></td>
+        {% else %}
+          <td class="fs-6"><div style="background-color: orange">{{i.product_quantity}}</div></td>
+        {% endif %}
+      {% else %}
+        <td class="fs-6">{{i.product_quantity}}</td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

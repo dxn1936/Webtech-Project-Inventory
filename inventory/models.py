@@ -35,6 +35,8 @@ class Products(models.Model):
 	product_name = models.CharField(max_length=50, blank=True, null=True)
 	product_brand = models.CharField(max_length=50, blank=True, null=True)
 	product_category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
+	product_quantity = models.IntegerField(default='0', blank=True, null=True)
+	product_reorder = models.IntegerField(default='0', blank=True, null=True)
 
 	def __str__(self):
 		return self.product_name
