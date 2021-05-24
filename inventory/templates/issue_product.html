@@ -1,4 +1,5 @@
 {% load static %}
+{% include 'navbar.html' %}
 {% load crispy_forms_tags %}
 <!doctype html>
 <html lang="en">
@@ -28,6 +29,7 @@
 <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#7952b3">
 
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 
     <style>
       .bd-placeholder-img {
@@ -51,23 +53,33 @@
   </head>
   <body>
     
-{% include 'navbar.html'%}
-
-<main class="container">
-   <div style="display: none">{{form|crispy}}</div>
-  <div class="bg-light p-5 rounded">
-    <h1 class="header">Login</h1>
-    {% block title %}
-    {% endblock %}
-
-    {% block content %}
-    {% endblock %}
-  </div>
+    <main role="main" class="container">
+      <div class="bg-light p-5 rounded">
+      <div class="jumbotron">
+        <h1 class="header">{{title}}</h1>
+        <br>
+        <h3 style="color:#337ab7"><span style="color:black">Item:</span>  {{item_name}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Category:</span>  {{category}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Supplier:</span>  {{supplier}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">rate:</span>  {{rate}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">warehouse:</span>  {{warehouse}}</h3>
+        <br>
+          <form method="post" action="">
+         {% csrf_token %}
+           {{form|crispy}}
+           <br>
+           <input class="btn btn-danger px-3" type="submit" value="Yes" />
+        </form>
+      </div>
 </main>
+
+
+
 
 
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
+    <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
       
   </body>
 </html>

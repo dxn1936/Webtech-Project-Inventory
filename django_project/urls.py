@@ -25,6 +25,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('sell_products/', views.sell_products, name='sell_products'),
     path('sell_qty/<str:pk>/', views.sell_qty, name='sell_qty'),
+    path('issue_product/<str:pk>/', views.issue_product, name='issue_product'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls'))    #django authorization
 ]

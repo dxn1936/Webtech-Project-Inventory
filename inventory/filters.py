@@ -11,3 +11,5 @@ class SearchProduct(django_filters.FilterSet):
 	class Meta:
 		model = Products
 		fields = ['product_name']
+
+

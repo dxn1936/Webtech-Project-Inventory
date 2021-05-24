@@ -16,7 +16,7 @@
         <a class="nav-link" href="/receive_products">Receive Products</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/sell_products">Sell Products</a>
+        <a class="nav-link" href="/sell_products">Issue Products</a>
       </li>
       {% endif %}
     </ul>
@@ -26,7 +26,7 @@
         {% if request.user.is_authenticated %}
         <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
         {% else %}
-        <li><a href="/accounts/login">Login</a></li>
+        <li><a href="/accounts/login" class="btn btn-outline-primary">Login</a></li>
         {% endif %}
     </ul>
   </div>
