@@ -1,0 +1,5 @@
+<option value="">---select racks---</option>
+{% for i in racks %}
+
+<option value="{{ i.pk }}">{{ i.rack_name }}</option>
+{% endfor %}
