@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Product_items_details, Products
-from .forms import ReceiveProductForm, ProductSearchForm, SearchProductsForm, UpdateSoldForm
+from .models import *
+from .forms import *
 from django.contrib import messages
 from .filters import SearchFilter, SearchProduct
 #import array as product_arr 
@@ -26,8 +26,8 @@ def receive_products(request):
 	form = ReceiveProductForm(request.POST or None)
 	if form.is_valid():
 		form.save()
-		messages.success(request, 'Successfully saved')
-		return redirect('/receive_products')
+		#messages.success(request, 'Successfully saved')
+		return redirect('/add_rack')
 	context = {
 		'title': title,
 		'form': form
@@ -107,6 +107,43 @@ def issue_product(request,pk):
 		product.product_sold = True
 		if form.is_valid():
 			form.save()
+			Product_Rack.objects.get(product=pk).delete()
 			messages.success(request, 'Successfully Issued')
 			return redirect('/sell_products')
 	return render(request, 'issue_product.html', {'title':'ISSUE', 'form':form, 'item_name':item_name, 'category':category, 'supplier': supplier, 'rate':rate, 'warehouse':warehouse})
+
+
+def add_rack(request):
+	form = ReceiveProductForm(request.POST or None)
+	product = Product_items_details.objects.last()
+	products = Product_Rack.objects.all()
+	racks = Rack.objects.filter(warehouse=product.product_in)
+	array_racks = []
+	for i in range(len(racks)):
+		count = 0
+		for j in range(len(products)):
+			if products[j].rack == racks[i]:
+				count = count + 1
+		array_racks.append(count)
+
+	arr = []
+	for i in range(len(array_racks)):
+		if array_racks[i] < racks[i].capacity:
+			arr.append(i) 
+
+	if len(arr) > 0:
+		rack = racks[arr[0]]
+		prod_rack = Product_Rack.objects.create(product=product, rack=rack)
+		messages.success(request, 'Successfully Stored in rack: '+rack.name)
+		return redirect('receive_products')
+	else:
+		product = Product_items_details.objects.last().delete()
+		messages.warning(request, 'Racks in this warehouse are full, item rejected')
+		return redirect('receive_products')
+		
+	context = {
+		'racks': racks,
+		'title': 'RECEIVE PRODUCTS',
+		'form': form,
+	}
+	return render(request, 'receive_products.html', context)

@@ -28,3 +28,4 @@ class UpdateSoldForm(forms.ModelForm):
 	class Meta:
 		model = Product_items_details
 		fields = ['sold_to']
+

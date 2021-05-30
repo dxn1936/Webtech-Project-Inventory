@@ -2,18 +2,12 @@ from django.db import models
 
 # Create your models here.
 
-customers = {
-	('Amazon','Amazon'),
-	('Flipkart','Flipkart'),
-	('Ebay','Ebay'),
-}
 
 class Category(models.Model):
 	name = models.CharField(max_length=50, blank=True, null=True)
 
 	def __str__(self):
 		return self.name
-
 
 class Suppliers(models.Model):
 	name = models.CharField(max_length=50, blank=True, null=True)
@@ -22,6 +16,17 @@ class Suppliers(models.Model):
 	def __str__(self):
 		return self.name
 
+class Customers(models.Model):
+	name = models.CharField(max_length=50, blank=True, null=True)
+	address = models.CharField(max_length=50, blank=True, null=True)
+
+	def __str__(self):
+		return self.name
+
+customers = []
+cust = Customers.objects.all()
+for i in range(len(cust)):
+	customers.append((cust[i].name,cust[i].name),)
 
 class Warehouse(models.Model):
 	warehouse_name = models.CharField(max_length=50, blank=True, null=True)
@@ -29,6 +34,15 @@ class Warehouse(models.Model):
 
 	def __str__(self):
 		return self.warehouse_name
+
+
+class Rack(models.Model):
+	name = models.CharField(max_length=50, blank=True, null=True)
+	warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, blank=True)
+	capacity = models.IntegerField(default='0', blank=True, null=True)
+
+	def __str__(self):
+		return self.name
 
 
 class Products(models.Model):
@@ -55,4 +69,13 @@ class Product_items_details(models.Model):
 
 	def __str__(self):
 		return str(self.product_item_name)
+
+
+class Product_Rack(models.Model):
+	product = models.ForeignKey(Product_items_details, on_delete=models.CASCADE, blank=True)
+	rack = models.ForeignKey(Rack, on_delete=models.CASCADE, blank=True)
+
+	def __str__(self):
+		return str(self.product) + str(self.rack)
+
 

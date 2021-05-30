@@ -52,6 +52,14 @@ th {
      text-align: center;
  }
 
+ .warning{                                   /* for suucessfull save,delete and update notifications*/
+     list-style: none;
+     background-color: #d9534f;
+     color: white;
+     box-shadow: 12px 12px 12px #808080;
+     text-align: center;
+ }
+
  .table_head{
     color: black;
     font-size: 16px;
