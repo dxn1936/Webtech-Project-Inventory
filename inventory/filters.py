@@ -12,4 +12,18 @@ class SearchProduct(django_filters.FilterSet):
 		model = Products
 		fields = ['product_name']
 
+class SearchSupplier(django_filters.FilterSet):
+	class Meta:
+		model = Suppliers
+		fields = ['name']
 
+class SearchSold(django_filters.FilterSet):
+	class Meta:
+		model = Product_items_details
+		fields = ['product_sold']
+
+
+class SearchCustomer(django_filters.FilterSet):
+	class Meta:
+		model = Customers
+		fields = ['name','address']

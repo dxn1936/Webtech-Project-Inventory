@@ -64,3 +64,8 @@ th {
     color: black;
     font-size: 16px;
  }
+
+ #mychart1{
+    width: 100vh;
+    height: 80vh;
+ }

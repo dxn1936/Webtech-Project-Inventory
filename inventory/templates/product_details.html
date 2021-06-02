@@ -53,39 +53,37 @@
   </head>
   <body>
     
+    <main role="main" class="container">
+      <div class="bg-light p-5 rounded">
+      <div class="jumbotron">
+        <h1 class="header">{{title}}</h1>
+        <br>
+        <h3 style="color:#337ab7"><span style="color:black">Item:</span>  {{product.product_item_name}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Category:</span>  {{product.product_item_name.product_category}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Supplier:</span>  {{product.purchased_from}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Wholesale rate:</span>  {{product.purchased_price}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Retail rate:</span>  {{product.selling_price}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Received on:</span>  {{product.timestamp}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Sold:</span>  {{product.product_sold}}</h3>
+        <h3 style="color:#337ab7"><span style="color:black">Warehouse:</span>  {{product.product_in}}</h3>
+        {% if product.product_sold %}
+          <h3 style="color:#337ab7"><span style="color:black">Sold to:</span>  {{product.sold_to}}</h3>
+        {% else %}
+          <h3 style="color:#337ab7"><span style="color:black">Stored in:</span>  Rack {{rack.rack}}</h3> 
+        {% endif %}
 
-
-<main class="container">
-  <div class="bg-light p-5 rounded">
-    <h1 class="header">{{title}}</h1>
-     <p class="font-weight-light text-center" style="color:#337ab7">{{quantity}} products available</p>
-     <br>
-      <div class="display_table">
-    <table class="table">
-    <thead>
-      <th class="table_head">Sr.N.</th>
-      <th class="table_head">Product</th>
-      <th class="table_head">Supplier</th>
-      <th class="table_head">Rate</th>
-      <th class="table_head">Warehouse</th>
-      <th class="table_head">Issue</th>
-    </thead>
-    {% for i in filter %}
-    <tr>
-      <td class="fs-6">{{forloop.counter}}</td>
-      <td class="fs-6">{{i.product_item_name}}</td>
-      <td class="fs-6">{{i.purchased_from}}</td>
-      <td class="fs-6">{{i.selling_price}}</td>
-      <td class="fs-6">{{i.product_in}}</td>
-      <td class="fs-6"><a href="{% url 'issue_product' i.id%}">Issue</a></td>
-    </tr>
-    {% endfor %}
-  </table>
-    
-  </div>
-
-  </div>
+        <br>
+          <form method="post" action="{% url 'list_products' %}">
+         {% csrf_token %}
+           {{form|crispy}}
+           <br>
+           <input class="btn btn-danger px-3" type="submit" value="Back" />
+        </form>
+      </div>
 </main>
+
+
+
 
 
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

@@ -69,6 +69,7 @@
       {{filter.form|crispy}}
       <br>
       <input type="submit" value='Search' onclick="scroll()" />
+      <a href="/export_csv" class="btn btn-primary"> Export csv</a>
   </form>
   <div class="display_table">
     <table class="table">
@@ -85,7 +86,7 @@
     {% for i in filter.qs %}
     <tr>
       <td class="fs-6">{{forloop.counter}}</td>
-      <td class="fs-6">{{i.product_item_name}}</td>
+      <td class="fs-6"><a href="{% url 'product_details' i.id %}">{{i.product_item_name}}</a></td>
       <td class="fs-6">{{i.purchased_from}}</td>
       <td class="fs-6">{{i.purchased_price}}</td>
       <td class="fs-6">{{i.selling_price}}</td>

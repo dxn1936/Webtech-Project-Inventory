@@ -3,9 +3,10 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from django.contrib import messages
-from .filters import SearchFilter, SearchProduct
-#import array as product_arr 
-#import array as product_counts
+from .filters import SearchFilter, SearchProduct, SearchSupplier, SearchSold, SearchCustomer
+import csv,datetime
+from django.http import HttpResponse
+from django.db.models import Count
 
 
 # Create your views here.
@@ -28,6 +29,8 @@ def receive_products(request):
 		form.save()
 		#messages.success(request, 'Successfully saved')
 		return redirect('/add_rack')
+	else:
+		form = ReceiveProductForm()
 	context = {
 		'title': title,
 		'form': form
@@ -48,15 +51,7 @@ def list_products(request):
 	return render(request, "list_products.html", context)
 
 
-def dashboard(request):
-	product_details = Product_items_details.objects.all()
-	total = 0
-	for i in product_details:
-		total += i.selling_price - i.purchased_price 
-	context = {
-		'field': total
-	}
-	return render(request, 'dashboard.html', context)
+
 
 
 def sell_products(request):
@@ -147,3 +142,121 @@ def add_rack(request):
 		'form': form,
 	}
 	return render(request, 'receive_products.html', context)
+	
+	
+def dashboard(request):
+    product_details = Product_items_details.objects.all()
+    product_count = product_details.count()
+    product = Products.objects.all()
+    details = product.count()
+    supplier = Product_items_details.objects.values('purchased_from').distinct().count()
+    sold = Product_items_details.objects.filter(product_sold='1').count()
+    #sold = Product_items_details.objects.filter(product_sold='1').count().distinct()
+    available = Product_items_details.objects.filter(product_sold='0').count()
+    total = 0
+   
+   # customers = Product_items_details.objects.values('sold_to').distinct().count()
+    customer = Product_items_details.objects.filter(sold_to__isnull=False)
+    customers = customer.values('sold_to').distinct().count()
+  
+    category = Category.objects.all()
+
+    for i in product_details:
+        total += i.selling_price - i.purchased_price 
+    context = {
+        'total': total,
+        'product_count': product_count,
+        'supplier': supplier,
+        'sold' : sold,
+        'available' :available,
+        'product' : product,
+        'customers': customers,
+        'category' : category
+    }
+    return render(request, 'dashboard.html', context)
+	
+	
+def export_csv(request):
+    response=HttpResponse(content_type='text/csv')
+    response['Content-Disposition']='attachment; filename=Inventory'+ \
+        str(datetime.datetime.now())+'.csv'
+
+    writer=csv.writer(response)
+    writer.writerow(['PRODUCT_ITEM_NAME','PURCHASED_FROM','PURCHASED_PRICE','SELLING_PRICE','PRODUCT_IN','PRODUCT_SOLD','SOLD_TO','TIMESTAMP'])
+    product=Product_items_details.objects.filter()
+
+    for Stock in product:
+            writer.writerow([Stock.product_item_name,Stock.purchased_from,Stock.purchased_price,
+                                Stock.selling_price,Stock.product_in,Stock.product_sold,Stock.sold_to,Stock.timestamp])
+
+    return response 
+
+def selproduct_csv(request):
+    response=HttpResponse(content_type='text/csv')
+    response['Content-Disposition']='attachment; filename=Sellproduct'+ \
+        str(datetime.datetime.now())+'.csv'
+
+    writer=csv.writer(response)
+    writer.writerow(['PRODUCT_NAME','PRODUCT_BRAND','PRODUCT_QUANTITY'])
+    product=Products.objects.filter()
+    for Stock in product:
+            writer.writerow([Stock.product_name,Stock.product_brand,
+                                Stock.product_quantity])
+    return response 
+
+def suppliers(request):
+	suppliers = Suppliers.objects.all()
+	filt = SearchSupplier(request.GET, queryset=suppliers)
+	form = SearchSupplierForm(request.GET or None)
+	context = {
+		'supplier':suppliers,
+		'title': 'SUPPLIERS',
+		'filter': filt,
+		'form': form,
+	}
+
+	return render(request, 'suppliers.html', context)
+
+def sold(request):
+	#sold_prods = Product_items_details.objects.filter(sold_to__isnull=False)
+	#filt = SearchSold(request.GET, quaryset=sold_prods)
+	quaryset = Product_items_details.objects.filter(product_sold=True)
+	#form = SearchSoldForm(request.GET or None)
+	#if request.method == 'GET':
+		#quaryset = Product_items_details.objects.filter(product_item_name__icontains=form['product_item_name'].value())
+	context = {
+		'title': 'PRODUCTS SOLD',
+		'quaryset':quaryset,
+	}
+	return render(request, 'sold.html', context)
+
+
+def customers(request):
+	customers = Customers.objects.all()
+	#fil = SearchCustomer(request.GET, quaryset=customers)
+	#form = SearchCustomerForm(request.GET or None)
+	context = {
+		'title':'CUSTOMERS',
+		'customers':customers,
+		#'filter': fil,
+		#'form': form,
+	}
+	return render(request, 'customers.html', context)
+
+
+def product_details(request,pk):
+	product = Product_items_details.objects.get(id=pk)
+	if product.product_sold:
+		context = {
+			'title': 'PRODUCT DETAILS',
+			'product': product,
+		}
+		return render(request, 'product_details.html', context)
+	else:
+		rack = Product_Rack.objects.get(product=pk)
+		context = {
+			'title': 'PRODUCT DETAILS',
+			'product': product,
+			'rack': rack,
+		}
+		return render(request, 'product_details.html', context)

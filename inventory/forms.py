@@ -29,3 +29,18 @@ class UpdateSoldForm(forms.ModelForm):
 		model = Product_items_details
 		fields = ['sold_to']
 
+class SearchSupplierForm(forms.ModelForm):
+	class Meta:
+		model = Suppliers
+		fields = ['name']
+
+
+class SearchSoldForm(forms.ModelForm):
+	class Meta:
+		model = Product_items_details
+		fields = ['product_item_name']
+
+class SearchCustomerForm(forms.ModelForm):
+	class Meta:
+		model = Customers
+		fields = ['name']

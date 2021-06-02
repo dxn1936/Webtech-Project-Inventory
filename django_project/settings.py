@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inventory',
     'crispy_forms',
-    'django_createuser',
+   
     'django_filters'
 ]
 
