@@ -58,23 +58,7 @@
       <div class="jumbotron">
         <h1 class="header">{{title}}</h1>
         <br>
-        <h3 style="color:#337ab7"><span style="color:black">Item:</span>  {{product.product_item_name}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Category:</span>  {{product.product_item_name.product_category}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Supplier:</span>  {{product.purchased_from}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Wholesale rate:</span>  {{product.purchased_price}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Retail rate:</span>  {{product.selling_price}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Received on:</span>  {{product.timestamp}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Sold:</span>  {{product.product_sold}}</h3>
-        <h3 style="color:#337ab7"><span style="color:black">Warehouse:</span>  {{product.product_in}}</h3>
-        {% if product.product_sold %}
-          <h3 style="color:#337ab7"><span style="color:black">Sold to:</span>  {{product.sold_to}}</h3>
-        {% else %}
-          <h3 style="color:#337ab7"><span style="color:black">Stored in:</span>  Rack {{rack.rack}}</h3>
-          <br><a href="{% url 'transfer' product.id %}"><input type="submit" name="Transfer" value="Transfer" class="btn btn-primary" /></a> 
-        {% endif %}
-
-        <br>
-          <form method="post" action="{% url 'list_products' %}">
+        <form method="post" action="">
          {% csrf_token %}
            {{form|crispy}}
            <br>

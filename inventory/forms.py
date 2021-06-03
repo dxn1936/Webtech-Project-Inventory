@@ -44,3 +44,8 @@ class SearchCustomerForm(forms.ModelForm):
 	class Meta:
 		model = Customers
 		fields = ['name']
+
+class UpdateWarehouseForm(forms.ModelForm):
+	class Meta:
+		model = Product_items_details
+		fields = ['product_in']

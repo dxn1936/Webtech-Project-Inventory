@@ -260,3 +260,48 @@ def product_details(request,pk):
 			'rack': rack,
 		}
 		return render(request, 'product_details.html', context)
+
+
+def transfer(request,pk):
+
+	product = Product_items_details.objects.get(id=pk)
+	form = UpdateWarehouseForm(instance=product)
+	products = Product_Rack.objects.all()
+	if request.method == 'POST':
+		form = UpdateWarehouseForm(request.POST)
+		racks = Rack.objects.filter(warehouse=form.data['product_in'])
+		array_racks = []
+		for i in range(len(racks)):
+			count = 0
+			for j in range(len(products)):
+				if products[j].rack == racks[i]:
+					count = count + 1
+			array_racks.append(count)
+
+		arr = []
+		for i in range(len(array_racks)):
+			if array_racks[i] < racks[i].capacity:
+				arr.append(i) 
+
+		if len(arr) > 0:
+			if form.is_valid():
+				warehouse = Warehouse.objects.get(id=form.data['product_in'])
+				form = UpdateWarehouseForm(request.POST, instance=product)
+				product.product_in = warehouse
+				product.save()
+				rack = racks[arr[0]]
+				Product_Rack.objects.get(product=pk).delete()
+				prod_rack = Product_Rack.objects.create(product=product, rack=rack)
+				messages.success(request, 'Successfully transfered to '+warehouse.warehouse_name+', Stored in rack: '+rack.name)
+				return redirect('list_products')
+		else:
+			messages.warning(request, 'warehouse is full')
+			return redirect('list_products')
+	
+	context = {
+		'title': 'TRANSFER',
+		'pk': pk,
+		'product': product,
+		'form': form,
+	}
+	return render(request, 'transfer.html', context)
