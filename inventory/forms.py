@@ -11,7 +11,8 @@ from .models import *
 class ReceiveProductForm(forms.ModelForm):
 	class Meta:
 		model = Product_items_details
-		fields = ['product_item_name', 'purchased_from', 'purchased_price', 'selling_price', 'product_in']
+		fields = ['product_item_name', 'purchased_from', 'purchased_price', 'selling_price', 'product_in','quantity']
+	quantity = forms.IntegerField()
 
 class ProductSearchForm(forms.ModelForm):
 	class Meta:
@@ -49,3 +50,4 @@ class UpdateWarehouseForm(forms.ModelForm):
 	class Meta:
 		model = Product_items_details
 		fields = ['product_in']
+

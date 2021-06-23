@@ -57,19 +57,21 @@
 
 <main class="container">
   {% if messages %}
-        <ul class="messages">
+        <ul class="messages" id="messages">
                {% for message in messages %}
                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                {% endfor %}
        </ul>
   {% endif %}
+  <script type="text/javascript">window.setTimeout("document.getElementById('messages').style.display='none';", 2000); </script>
+ 
   <div class="bg-light p-5 rounded">
     <h1 class="header">{{title}}</h1>
      <form method='GET' action=''>{% csrf_token %}
       {{filter.form|crispy}}
       <br>
       <input type="submit" value='Search' onclick="scroll()" />
-      <a href="/export_csv" class="btn btn-primary"> Export csv</a>
+      <a href="/stock_csv" class="btn btn-primary"> Export csv</a>
   </form>
   <div class="display_table">
     <table class="table">

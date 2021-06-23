@@ -10,7 +10,7 @@ class SearchFilter(django_filters.FilterSet):
 class SearchProduct(django_filters.FilterSet):
 	class Meta:
 		model = Products
-		fields = ['product_name']
+		fields = ['product_name', 'product_brand']
 
 class SearchSupplier(django_filters.FilterSet):
 	class Meta:
@@ -20,7 +20,7 @@ class SearchSupplier(django_filters.FilterSet):
 class SearchSold(django_filters.FilterSet):
 	class Meta:
 		model = Product_items_details
-		fields = ['product_sold']
+		fields = ['product_item_name','product_in','purchased_from']
 
 
 class SearchCustomer(django_filters.FilterSet):

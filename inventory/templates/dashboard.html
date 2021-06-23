@@ -130,34 +130,31 @@
                     <div class="col-2">
                     
                     </div>
-                    <div class="col-8">
-                        <canvas id="myChart" width="80" height="60" class="p-5"></canvas>
+                    <div class="col-8  d-flex justify-content-center">
+                        <canvas id="myChart" width="90" height="60" class="p-5"></canvas>
                     <script>
-                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var ctx = document.getElementById('myChart');
                         var myChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: [{% for i in category  %} '{{i.name}}', {% endfor %}],
+                                labels: [{% for i in cust %} '{{i.name}}', {% endfor %}],
                                 datasets: [{
-                                    label: [{% for i in category  %} '{{i.name}}', {% endfor %}],
-                                    data: [12, 19, 3, 5, 2, 3],
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
-                                    ],
+                                    label: [{% for i in cust %} '{{i.name}}', {% endfor %}],
+                                    data: {{data| safe}},
+                                    backgroundColor:['rgba(255, 99, 132, 0.9)',
+                                                    'rgba(255, 206, 86, 0.9)',
+                                                    'rgba(75, 192, 192, 0.9)',
+                                                    'rgba(153, 102, 255, 0.9)',
+                                                    'rgba(255, 159, 64, 0.9)'],
                                     borderColor: [
-                                        'rgba(255, 99, 132, 1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
-                                    ],
-                                    borderWidth: 1
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
+                                        ],
+
                                 }]
                             },
                             options: {
@@ -172,16 +169,14 @@
                         });
                     </script>
                     </div>
-                    <div class="col-2">
-                        
-                    </div>
                 </div>
-                <br>
+               <hr class="shadow p-3 mb-5 bg-white rounded">
+               <br>
                 <div class="row">
                     <div class="col-2">
                     
                     </div>
-                    <div class="col-8">
+                    <div class="col-8  d-flex justify-content-center">
                          <canvas id="myChart1" width="100" height="60"></canvas>
                         <script>
                             var ctx = document.getElementById('myChart1').getContext('2d');
@@ -190,24 +185,24 @@
                                 data: {
                                      labels: [{% for i in product %} '{{i.product_name}}', {% endfor %}],
                                     datasets: [{
-                                        label: 'Number of Products',
+                                        label: 'Products vs product_quantity',
                                       
                                            data: [{% for i in product %} {{i.product_quantity}}, {% endfor %}],
                                         backgroundColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
                                         ],
                                         borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
                                         ],
                                         borderWidth: 1
                                     }]
@@ -225,8 +220,101 @@
                         </script>
                     </div>
                     <div class="col-2">
-                        
+                    
                     </div>
+                </div>
+                <hr class="shadow p-3 mb-5 bg-white rounded">
+               <br>
+                    <div class="row">
+                         <div class="col-2">
+                    
+                    </div>
+                     <div class="col-8  d-flex justify-content-center">
+                         <canvas id="myChart2" width="100" height="60"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart2').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'horizontalBar',
+                                data: {
+                                     labels: {{labels1| safe}},
+                                    datasets: [{
+                                        label: ' Products available',
+                                      
+                                           data: {{data1|safe}},
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                         <div class="col-2">
+                    
+                    </div>
+                </div>
+                <br>
+                <br>
+                <hr class="shadow p-3 mb-5 bg-white rounded">
+               <br>
+                 <div class="row">
+                         <div class="col-2">
+                    
+                    </div>
+                     <div class="col-8  d-flex justify-content-center">
+                         <canvas id="myChart3" width="100" height="60"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart3').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                     labels: {{label2| safe}},
+                                    datasets: [{
+                                        label: 'Products per category available',
+                                      
+                                           data: {{data2|safe}},
+                                        backgroundColor: 'rgba(255, 99, 132, 0.9)',
+                                          
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: false
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                  
                 </div>
             </div>
             

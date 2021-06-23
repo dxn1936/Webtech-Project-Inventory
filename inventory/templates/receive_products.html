@@ -57,21 +57,24 @@
 
 <main class="container">
 {% if messages %}
-        <ul class="messages">
+        <ul class="messages" id="messages">
                {% for message in messages %}
                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                {% endfor %}
        </ul>
   {% endif %}
+  <script type="text/javascript">window.setTimeout("document.getElementById('messages').style.display='none';", 2000); </script>
   <div class="bg-light p-5 rounded">
     <h1 class="header">{{title}}</h1>
     <form method="POST" action="">{% csrf_token %}
     {{form|crispy}}
+    
     <br>
     <input type="submit" value="Save" />
   </form>
   </div>
 </main>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script></body>
 

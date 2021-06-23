@@ -57,12 +57,13 @@
 
 <main class="container">
   {% if messages %}
-        <ul class="messages">
+        <ul class="messages" id="messages">
                {% for message in messages %}
                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                {% endfor %}
        </ul>
   {% endif %}
+  <script type="text/javascript">window.setTimeout("document.getElementById('messages').style.display='none';", 2000); </script>
   <div class="bg-light p-5 rounded">
     <h1 class="header">{{title}}</h1>
      

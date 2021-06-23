@@ -59,7 +59,12 @@
   <div class="bg-light p-5 rounded">
   <h1 class="header">{{title}}</h1>
   <br>
+   <form method='GET' action=''>{% csrf_token %}
+      {{filter.form|crispy}}
   <br>
+  <input type="submit" value='Search' />
+          <a href="/sold_csv" class="btn btn-primary"> Export csv</a>
+          </form>
   <div class="display_table">
      <table class="table">
     <thead>
@@ -69,10 +74,9 @@
       <th class="table_head">PURCHASED PRICE</th>
       <th class="table_head">SELLING PRICE</th>
       <th class="table_head">WAREHOUSE</th>
-      <th class="table_head">SOLD</th>
       <th class="table_head">SOLD TO</th>
     </thead>
-    {% for i in quaryset %}
+    {% for i in filter.qs %}
     <tr>
       <td class="fs-6">{{forloop.counter}}</td>
       <td class="fs-6">{{i.product_item_name}}</td>
@@ -80,7 +84,6 @@
       <td class="fs-6">{{i.purchased_price}}</td>
       <td class="fs-6">{{i.selling_price}}</td>
       <td class="fs-6">{{i.product_in}}</td>
-      <td class="fs-6">{{i.product_sold}}</td>
       <td class="fs-6">{{i.sold_to}}</td>
     </tr>
     {% endfor %}

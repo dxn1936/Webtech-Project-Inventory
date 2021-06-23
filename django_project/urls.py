@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from inventory import views
+from inventory import views, export
 from django.urls import include
 
 urlpatterns = [
@@ -28,9 +28,13 @@ urlpatterns = [
     path('customers/', views.customers, name='customers'),
     path('suppliers/', views.suppliers, name='suppliers'),
     path('list_products/', views.list_products, name='list_products'),
-    path('export_csv',views.export_csv, name="export-csv"),
-    path('selproduct_csv',views.selproduct_csv, name="export-csv"),
+    path('stock_csv',export.stock_csv, name="export-csv"),
+    path('selproduct_csv',export.selproduct_csv, name="export-csv"),
+    path('supplier_csv',export.supplier_csv, name="export-csv"),
+    path('sold_csv',export.sold_csv, name="export-csv"),
+    path('customers_csv',export.customers_csv, name="export-csv"),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('chart/', views.dashboard, name='dashboard'),
     path('sell_products/', views.sell_products, name='sell_products'),
     path('sell_qty/<str:pk>/', views.sell_qty, name='sell_qty'),
     path('issue_product/<str:pk>/', views.issue_product, name='issue_product'),
