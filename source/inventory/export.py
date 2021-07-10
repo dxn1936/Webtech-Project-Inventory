@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from django.contrib import messages
-from .filters import SearchFilter, SearchProduct, SearchSupplier, SearchSold, SearchCustomer
+from .filters import SearchFilter, SearchProduct, SearchSupplier, SearchSold
 import csv,datetime
 from django.http import HttpResponse
+
+
 def stock_csv(request):
     response=HttpResponse(content_type='text/csv')
     response['Content-Disposition']='attachment; filename=Inventory'+ \
@@ -59,14 +61,14 @@ def sold_csv(request):
                                 i.sold_to])
     return response
 
-def customers_csv(request):
-    response=HttpResponse(content_type='text/csv')
-    response['Content-Disposition']='attachment; filename=Customers details'+ \
-        str(datetime.datetime.now())+'.csv'
-
-    writer=csv.writer(response)
-    writer.writerow(['CUSTOMER NAME','CUSTOMER ADDRESS'])
-    Customer=  Customers.objects.all()
-    for i in Customer:
-            writer.writerow([i.name,i.address])
-    return response
+#def customers_csv(request):
+#   response=HttpResponse(content_type='text/csv')
+#    response['Content-Disposition']='attachment; filename=Customers details'+ \
+#        str(datetime.datetime.now())+'.csv'
+#
+#    writer=csv.writer(response)
+#    writer.writerow(['CUSTOMER NAME','CUSTOMER ADDRESS'])
+#    Customer=  Customers.objects.all()
+#    for i in Customer:
+#            writer.writerow([i.name,i.address])
+#    return response

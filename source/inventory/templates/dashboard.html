@@ -62,11 +62,11 @@
             <div class="card-body ">
                 <div class="row ">
                     <div class="col-md-2 display_">
-                        <a class="text-decoration-none text-dark" href=" ">
+                        <a class="text-decoration-none text-dark" href="{% url 'employees' %}">
                             <div class="card my-card shadow">
                                 <div class="card-body text-center">
-                                    <h4 class="header h3">Profit <i class="fas fa-users"></i></h4>
-                                    <h3>{{ total }}</h3>
+                                    <h4 class="header h3">Employees <i class="fas fa-users"></i></h4>
+                                    <h3>{{ employee }}</h3>
                                 </div>
                             </div>
                         </a>
@@ -82,6 +82,16 @@
                         </a>
                     </div>
                     <div class="col-md-2 display_">
+                        <a class="text-decoration-none text-dark" href="{% url 'total_orders' %}">
+                            <div class="card my-card shadow">
+                                <div class="card-body text-center">
+                                    <h4 class="header h3">Total Orders<i class="fas fa-box"></i></h4>
+                                    <h3>{{ order1 }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2 display_">
                         <a class="text-decoration-none text-dark" href="{% url 'suppliers' %}">
                             <div class="card my-card shadow">
                                 <div class="card-body text-center">
@@ -92,32 +102,12 @@
                         </a>
                     </div>
                 
-                     <div class="col-md-2 display_">
-                        <a class="text-decoration-none text-dark" href="{% url 'sold' %}">
-                            <div class="card my-card shadow">
-                                <div class="card-body text-center">
-                                    <h4 class="header h3">Sold<i class="fas fa-shipping-fast"></i></h4>
-                                    <h3>{{ sold }}</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-2 display_">
-                        <a class="text-decoration-none text-dark" href="{% url 'sell_products' %}">
-                            <div class="card my-card shadow">
-                                <div class="card-body text-center">
-                                    <h4 class="header h3">Available<i class="fas fa-shipping-fast"></i></h4>
-                                    <h3>{{ available }}</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                     <div class="col-md-2 display_">
-                        <a class="text-decoration-none text-dark" href="{% url 'customers' %}">
+                     <div class="col-md-2 display_" >
+                        <a class="text-decoration-none text-dark" href="{% url 'total_customers' %}">
                             <div class="card my-card shadow">
                                 <div class="card-body text-center">
                                     <h4 class="header h3">Customers<i class="fas fa-shipping-fast"></i></h4>
-                                    <h3>{{ customers  }}</h3>
+                                    <h3>{{ c  }}</h3>
                                 </div>
                             </div>
                         </a>
@@ -130,43 +120,16 @@
                     <div class="col-2">
                     
                     </div>
-                    <div class="col-6">
-                        <canvas id="myChart" width="90" height="60" class="p-5"></canvas>
-                    <script>
-                        var ctx = document.getElementById('myChart');
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: {{labels| safe}},
-                                datasets: [{
-                                    label: 'No of products per Customer',
-                                    data: {{data| safe}},
-                                    backgroundColor:'rgba(54, 162, 235, 1)',
-                                        
-                                   
-                                  
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            }
-                        });
-                    </script>
+                    
                     </div>
-                   
                 </div>
-               
+               <hr class="shadow p-3 mb-5 bg-white rounded">
+               <br>
                 <div class="row">
                     <div class="col-2">
                     
                     </div>
-                    <div class="col-6">
+                    <div class="col-6  d-flex justify-content-center">
                          <canvas id="myChart1" width="100" height="60"></canvas>
                         <script>
                             var ctx = document.getElementById('myChart1').getContext('2d');
@@ -179,20 +142,20 @@
                                       
                                            data: [{% for i in product %} {{i.product_quantity}}, {% endfor %}],
                                         backgroundColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
                                         ],
                                         borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
+                                            'rgba(255, 99, 132, 0.9)',
+                                            'rgba(54, 162, 235, 0.9)',
+                                            'rgba(255, 206, 86, 0.9)',
+                                            'rgba(75, 192, 192, 0.9)',
+                                            'rgba(153, 102, 255, 0.9)',
+                                            'rgba(255, 159, 64, 0.9)'
                                         ],
                                         borderWidth: 1
                                     }]
@@ -209,70 +172,16 @@
                             });
                         </script>
                     </div>
-                    <div class="col-2">
-                    
-                    </div>
                 </div>
                 <br>
                 <br>
-                    <div class="row">
-                         <div class="col-2">
-                    
+                <div class="row">
+                     <div class="col-2">
+                    <br>
+                    <br>
+                    <br>
                     </div>
-                     <div class="col-6">
-                         <canvas id="myChart2" width="100" height="60"></canvas>
-                        <script>
-                            var ctx = document.getElementById('myChart2').getContext('2d');
-                            var myChart1 = new Chart(ctx, {
-                                type: 'horizontalBar',
-                                data: {
-                                     labels: {{labels1| safe}},
-                                    datasets: [{
-                                        label: ' Products available',
-                                      
-                                           data: {{data1|safe}},
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                        </script>
-                    </div>
-                         <div class="col-2">
-                    
-                    </div>
-                </div>
-                <br>
-                <br>
-                 <div class="row">
-                         <div class="col-2">
-                    
-                    </div>
-                     <div class="col-6">
+                       <div class="col-6  d-flex justify-content-center">
                          <canvas id="myChart3" width="100" height="60"></canvas>
                         <script>
                             var ctx = document.getElementById('myChart3').getContext('2d');
@@ -284,28 +193,39 @@
                                         label: 'Products per category available',
                                       
                                            data: {{data2|safe}},
-                                        backgroundColor: 'rgba(255, 99, 132, 1)',
-                                          
+                                        backgroundColor:[
+                                         'rgba(255, 99, 132, 0.9)',
+                                                          'rgba(255, 99, 132, 0.9)',
+                                                         'rgba(54, 162, 235, 0.9)',
+                                                         'rgba(255, 206, 86, 0.9)',
+                                                         'rgba(75, 192, 192, 0.9)',
+                                                        'rgba(153, 102, 255, 0.9)',
+                                                         'rgba(255, 159, 64, 0.9)'
+                                          ],
                                     }]
                                 },
                                 options: {
                                     scales: {
                                         yAxes: [{
                                             ticks: {
-                                                beginAtZero: true
+                                                beginAtZero: false
                                             }
                                         }]
                                     }
                                 }
                             });
                         </script>
-                    </div>
-                </div>
+                    
+                       </div>
+                   </div>
+               </div>
+           </div>
 
-                  
-                </div>
-            </div>
-            
+                    
+                    
+                   
+               
+               
   </body>
 
 </html>

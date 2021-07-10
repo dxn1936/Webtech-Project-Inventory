@@ -63,7 +63,7 @@
                {% endfor %}
        </ul>
   {% endif %}
-  <script type="text/javascript">window.setTimeout("document.getElementById('messages').style.display='none';", 2000); </script>
+  <script type="text/javascript">window.setTimeout("document.getElementById('messages').style.display='none';", 8000); </script>
  
   <div class="bg-light p-5 rounded">
     <h1 class="header">{{title}}</h1>
@@ -82,8 +82,11 @@
       <th class="table_head">PURCHASED PRICE</th>
       <th class="table_head">SELLING PRICE</th>
       <th class="table_head">WAREHOUSE</th>
+      <th class="table_head">ROOM</th>
       <th class="table_head">SOLD</th>
       <th class="table_head">SOLD TO</th>
+      <th class="table_head">RESERVED</th>
+      <th class="table_head">ORDER ID</th>
     </thead>
     {% for i in filter.qs %}
     <tr>
@@ -93,8 +96,11 @@
       <td class="fs-6">{{i.purchased_price}}</td>
       <td class="fs-6">{{i.selling_price}}</td>
       <td class="fs-6">{{i.product_in}}</td>
+      <td class="fs-6">{{i.room}}</td>
       <td class="fs-6">{{i.product_sold}}</td>
       <td class="fs-6">{{i.sold_to}}</td>
+      <td class="fs-6">{{i.reserved}}</td>
+      <td class="fs-6">{{i.order_id}}</td>
     </tr>
     {% endfor %}
   </table>

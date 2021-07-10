@@ -69,3 +69,11 @@ th {
     width: 100vh;
     height: 80vh;
  }
+
+.productname{
+    display: inline;
+}
+
+.addcart{
+    float: right;
+ }

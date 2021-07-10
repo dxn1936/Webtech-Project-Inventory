@@ -56,12 +56,13 @@
 <main class="container">
    <div style="display: none">{{form|crispy}}</div>
   <div class="bg-light p-5 rounded">
-    <h1 class="header">Login</h1>
+    <h1 class="header">Inventory Management System</h1>
     {% block title %}
     {% endblock %}
 
     {% block content %}
     {% endblock %}
+    <a href="{% url 'customer_registration' %}" class="btn btn-success">Customer Registration</a>
   </div>
 </main>
 

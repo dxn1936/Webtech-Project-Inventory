@@ -1,4 +1,5 @@
-
-function scroll(){
-	window.scrollTo(0,650);
+function quantityValidation(value){
+	if(value <= 0){
+		alert("Invalid Quantity")
+	}
 }
